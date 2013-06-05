@@ -35,7 +35,7 @@ it looks for ".jar", "-sources.jar" and "-javadoc.jar" and install all found fil
 to the local maven repository.
 
 The script accurately calculates inputs/outputs. If all files were already installed,
-it does not install anythings and shows "UP-TO-DATE" in the console.
+it does not install anything and shows "UP-TO-DATE" in the console.
 
 The timestamp of last artifact installation is saved into file "build/contribsInstalled".
 
