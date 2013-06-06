@@ -84,6 +84,9 @@ task installContribs {
   }
 }
 
+task install
+install.dependsOn installContribs
+
 // it is possible to define other tasks here, for example, for deploying
 // to company-wide artifactory etc.
 
@@ -96,4 +99,7 @@ task cleanContribs {
   }
 }
 
-defaultTasks "installContribs"
+task clean
+clean.dependsOn cleanContribs
+
+defaultTasks "install"
