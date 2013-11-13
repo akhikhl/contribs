@@ -10,7 +10,7 @@
  * Date: 05.06.2013
  *
  * @author Andrey Hihlovskiy
- * @version 1.0.2
+ * @version 1.0.3
  * @requires gradle 1.8 or later
  *
  * Get complete sources and documentation at:
@@ -18,7 +18,7 @@
  * https://github.com/akhikhl/contribs
  *
  **/
- 
+
 buildscript {
     
   repositories {
@@ -73,7 +73,10 @@ def deployArtifacts(pomFiles, repository, user, password) {
   }
 }
 
-task('install') {
+// build task does nothing, it is just sometimes needed by outer context
+task 'build'
+
+task('install', dependsOn: build) {
   description = 'Installs poms, jars and, optionally, sources and javadoc to the local maven repository.'
   def sourceTree = fileTree(dir: projectDir.absolutePath, includes: ['**/*.pom'])
   File markerFile = new File(buildDir, 'contribsInstalled')
@@ -87,7 +90,7 @@ task('install') {
   }
 }
 
-task('uploadArchives') {
+task('uploadArchives', dependsOn: build) {
   description = 'Uploads poms, jars and, optionally, sources and javadoc to the globally defined repository.'
   def sourceTree = fileTree(dir: projectDir.absolutePath, includes: ['**/*.pom'])
   doLast {
@@ -98,7 +101,7 @@ task('uploadArchives') {
 
 if(!tasks.findByName('clean'))
   task('clean') {
-    description = ''Forgets' about contribution installations/deployments.'
+    description = '"Forgets" about contribution installations/deployments.'
     outputs.upToDateWhen { !buildDir.exists() }
     doLast {
       if(buildDir.exists())
